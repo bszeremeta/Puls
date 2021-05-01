@@ -37,5 +37,51 @@ $(document).ready(function() {
     toggleSlide('.catalog-item__back');
     toggleSlide('.catalog-item__link');
 
+    //Modal
+
+    $('[data-modal=consultation]').on('click', function() {
+        $('.overlay, #consultation').fadeIn('fast');
+    });
+
+    $('.modal__close').on('click', function() {
+        $('.overlay, #consultation, #thanks, #order').fadeOut('fast')
+    });
+
+    $('.button_buy').each(function(i) {
+        $(this).on('click', function() {
+            $('#order .modal__descr').text($('.catalog-item__subtitle').eq(i).text());
+            $('.overlay, #order').fadeIn('fast');
+        });
+    });
+
+    //validation
+
+    $('#consultation-form').validate();
+    $('#consultation form').validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 2
+            },
+            phone: "required",
+            email: {
+                require: true,
+                email: true
+            }
+        },
+        messages: {
+            name: {
+                required: "Пожалуйста, введите свое имя",
+                minlength: jQuery.validator.format("Введите минимум {0} символа!")
+            },
+
+            phone: "Пожалуйста, введите свой номер телефона",
+            email: {
+                required: "Пожалуйста, введите адерс електоронной почты",
+                email: "Непровильно введен адрес електронной почты"
+            }
+        }
+    });
+    $('#order form').validate();
 
 });
